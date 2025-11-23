@@ -14,6 +14,8 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      - name: Print GH_ACTOR
+        run: echo "GH_ACTOR=${{ vars.GH_ACTOR }}"
       - name: create .env file
         run: |
           echo "gmail_username=${{ secrets.GMAIL_USERNAME }}" >> .env
