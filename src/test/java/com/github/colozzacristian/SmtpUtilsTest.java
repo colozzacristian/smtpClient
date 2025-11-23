@@ -1,7 +1,8 @@
-package it.eforhum;
+package com.github.colozzacristian;
 
 import java.io.IOException;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 import static java.lang.String.format;
 import io.github.cdimascio.dotenv.Dotenv;

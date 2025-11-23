@@ -25,6 +25,9 @@ jobs:
             GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
             GH_ACTOR: ${{ vars.GH_ACTOR }}
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: echo "gmail_username=$GMAIL_USERNAME" >> .env && echo "gmail_app_password=$GMAIL_APP_PASSWORD" >> .env && echo "GH_ACTOR=$GH_ACTOR" >> .env && echo "GH_TOKEN=$GH_TOKEN" >> .env
+        run: echo "gmail_username=$GMAIL_USERNAME" >> .env && echo "gmail_app_password=$GMAIL_APP_PASSWORD" >> .env
       - name: Publish
-        run: mvn deploy
+        env:
+          GH_ACTOR: ${{ vars.GH_ACTOR }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: set -a && source .env && set +a && mvn -s .m2/settings.xml deploy

@@ -1,4 +1,4 @@
-package it.eforhum;
+package com.github.colozzacristian;
 
 public class SmtpResponse {
 
