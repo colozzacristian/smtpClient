@@ -7,6 +7,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: .env
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
@@ -14,10 +15,19 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-      - name: Publish
-        run: mvn deploy
+      - name: Print GH_ACTOR
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_ACTOR: ${{ vars.GH_ACTOR }}
-          email_username: ${{ secrets.gmail_username }}
-          email_app_password: ${{ secrets.gmail_app_password }}
+        run: echo "GH_ACTOR=$GH_ACTOR"
+      - name: create .env file
+        env:
+            GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+            GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+            GH_ACTOR: ${{ vars.GH_ACTOR }}
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: echo "gmail_username=$GMAIL_USERNAME" >> .env && echo "gmail_app_password=$GMAIL_APP_PASSWORD" >> .env
+      - name: Publish
+        env:
+          GH_ACTOR: ${{ vars.GH_ACTOR }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: set -a && source .env && set +a && mvn -s .m2/settings.xml deploy
