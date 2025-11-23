@@ -1,0 +1,23 @@
+name: Publish Maven
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+      - name: Publish
+        run: mvn deploy
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_ACTOR: ${{ vars.GH_ACTOR }}
+          email_username: ${{ secrets.gmail_username }}
+          email_app_password: ${{ secrets.gmail_app_password }}
