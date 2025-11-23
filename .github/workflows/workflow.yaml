@@ -14,10 +14,12 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      - name: create .env file
+        run: |
+          echo "gmail_username=${{ secrets.gmail_username }}" >> .env
+          echo "gmail_app_password=${{ secrets.gmail_app_password }}" >> .env
+          echo "GH_ACTOR=${{ vars.GH_ACTOR }}" >> .env
+          echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> .env
+          
       - name: Publish
         run: mvn deploy
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_ACTOR: ${{ vars.GH_ACTOR }}
-          email_username: ${{ secrets.gmail_username }}
-          email_app_password: ${{ secrets.gmail_app_password }}
