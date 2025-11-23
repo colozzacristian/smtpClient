@@ -16,13 +16,13 @@ jobs:
           distribution: temurin
       - name: Print GH_ACTOR
         env:
-          GH_ACTOR: ${{ vars.GH_ACTOR }}
+          GH_ACTOR: ${{ env.GH_ACTOR }}
         run: echo "GH_ACTOR=$GH_ACTOR"
       - name: create .env file
         env:
             GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
             GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-            GH_ACTOR: ${{ vars.GH_ACTOR }}
+            GH_ACTOR: ${{ env.GH_ACTOR }}
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo "gmail_username=$GMAIL_USERNAME" >> .env 
